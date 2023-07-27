@@ -1,0 +1,9 @@
+- QTH: Lauterach
+  elevation_m: 500
+  latitude: 47.468 N
+  longitude: 9.732 E
+  rotctld_ip: 127.0.0.1
+  rotctld_port: 4533
+  rotctld_park_az: 0.00
+  rotctld_park_el: 5.00
+  rotctld_park_max_el: 90
