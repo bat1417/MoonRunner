@@ -27,12 +27,10 @@ The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" bin
 Start `python mrotorctl.py` in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
 Please check the code in the `__main__` section to understand, how you can use the class MRotController. You can modify your QTH location and the timestamps for obersvations here
 
-`    
+```
     # set IP and Port of Rotor Ctrl software (e.g. hamlib)
     rotctld_ip = "127.0.0.1"
     rotctld_port = 4533
-`
-` 
 
     # create a MRotController object with IP and port of Rotor Ctrl software
     rotctl = MRotController(rotctld_ip, rotctld_port, debug=DEBUG)
@@ -67,7 +65,7 @@ Please check the code in the `__main__` section to understand, how you can use t
     rotctl2 = MRotController("localhost", 4533)
     rotctl2.set_observer_location('47.468 N', '9.732 E', elevation_m=500)
     rotctl2.set_rotor_to_current_moon_position()
-`
+```
 
 ###  moonrunner_gui.py 
  moonrunner_gui.py contains the Python class "GUIMainFrame" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
