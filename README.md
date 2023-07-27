@@ -1,5 +1,5 @@
 # MoonRunner
-![Pic from Moon per 30.8.2009 by OE9BKJ](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/moon.png)
+![Pic from Moon per 30.8.2009 by OE9BKJ](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/moon.png)
  * [Introduction](#Introduction)
  * [Features](#Features)
  * [How to Use](#How-to-use)
@@ -25,7 +25,7 @@ The program consists of 2 main components:
 "mrotorctl.py" contains the Python class "**MRotController**" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
 The usage of the class can be found at the bottom in the main method
 The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" binary from the hamlib w64 4.5 Software [^2], [^5]
-![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/antrunner_hardware.png)
+![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/antrunner_hardware.png)
 #### Start
 Start `python mrotorctl.py` in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
 Please check the code in the `__main__` section to understand, how you can use the class MRotController. You can modify your QTH location and the timestamps for obersvations here
@@ -83,7 +83,7 @@ Note: this code uses the class "**MRotController**" from mrotorctl.py in the sam
 Execute `python moonrunner_gui.py` in the moonrunner directory.
 After start-up, you will see the used configuration data and the current Moon's position.
 
-![Screenshot after startup](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/Screen1_Start.jpg)
+![Screenshot after startup](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/Screen1_Start.jpg)
 
 ##### Functions
 - File/Load - reload config.yaml (only changes for rotor park positions will be changed in the running software. If you change your QTH location, you need to restart the program).
@@ -94,7 +94,7 @@ After start-up, you will see the used configuration data and the current Moon's 
 - Park: set rotor to the defined park position (az, el)
 - Read: read current rotor position (az, el)
 
-![Screenshot while tracking](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/Screen2_Track.jpg)
+![Screenshot while tracking](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/Screen2_Track.jpg)
 
 ## References
 [^1]: Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
