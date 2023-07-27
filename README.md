@@ -12,17 +12,19 @@ The programm consists of 2 main components:
 - mrotorctl.py 
 - mrotorctl.py
 
+## Setup
+- You need to have Python 3 installed.
+- You should also have installed pip: `python -m pip install --upgrade pip`
+- Run the `setup.cmd` in the "moonrunner" directory or manually execute `pip install -r requirements.txt` to install the needed libraries like Skyfield.
+- To control a antenna rotor, you need to have set up the rotor control software (running on port 4533 at your "localhost"). But anyway, you can just calculate the Moon's position (az, el) without having a antenna rotor.
+
 ### mrotorctl.py
 "mrotorctl.py" contains the Python class "MRotController" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
 The usage of the class can be found at the bottom in the main method
 The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" binary from the hamlib w64 4.5 Software [2], [5]
-#### Setup
-- You need to have Python 3 installed.
-- You should also have installed pip: "python -m pip install --upgrade pip"
-- Run the "setup.cmd" or manually execute "pip install -r requirements.txt" to install the needed libraries like Skyfield.
 #### Start
-Start "python mrotorctl.py" in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
-Please check the code in the `__main__` section to understand, how you can use the class MRotController:
+Start `python mrotorctl.py` in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
+Please check the code in the `__main__` section to understand, how you can use the class MRotController. You can modify your QTH location and the timestamps for obersvations here:
 `    #######################################################
     # The main method is used for test purpose only.
     # It shows you how to use this class.
@@ -68,26 +70,24 @@ Please check the code in the `__main__` section to understand, how you can use t
 
 ###  moonrunner_gui.py 
  moonrunner_gui.py contains the Python class "GUIMainFrame" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
+This code uses the class MRotController from mrotorctl.py in the same package.
 #### Setup
-- You need to change the values in "config.yaml" according to your QTH location.
+- You need to change the values in "config.yaml" according to your QTH location and your settings.
   Changes in rotor parking positions can be re-loaded with File/Load menu.
   If you change the QTH and location data, you need to restart the program.
   You also need to set up the IP and port of the rotor control software (e.g. hamlib "rotctld.exe").
-  If the file config.yaml is not present, it will be written at startup  with the values from CONFIG_DATA_DEFAULT in the code.
-#### Star
-# After start-up, you will see the used configuration data.
-#
-# Functions:
-#   Track: start tracking the Moon (toggle-button on/off)
-#   Park: set rotor to the defined park position (az, el)
-#   Read: read current rotor position (az, el)
-#
-# This code uses the class MRotController from mrotorctl.py in the same package.
+  If the file config.yaml is not present, it will be written at startup  with the values from CONFIG_DATA_DEFAULT in the code. 
+#### Start
+Execute `python moonrunner_gui.py` in the moonrunner directory.
+After start-up, you will see the used configuration data and the current Moon's position.
+![Screenshot after startup]https://github.com/bat1417/MoonRunner/moonrunner/Screen1_Start.jpg
+##### Functions
+- *Note: the following will only work, if you have set up an antenna rotor with a rotor control software listening on the defined port and IP.*
+- Track: start tracking the Moon (toggle-button on/off)
+- Park: set rotor to the defined park position (az, el)
+- Read: read current rotor position (az, el)
+![Screenshot while tracking]https://github.com/bat1417/MoonRunner/moonrunner/Screen2_Track.jpg
 
-
-## Features
-
-## How-to-use
 
 ## References
 [1] Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
