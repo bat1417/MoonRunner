@@ -7,20 +7,22 @@
 
 ## Introduction
 This project was inspired by Peter's (HB9BNI) idea, to generate "pseudo Kepler TLE" data for the Moon to use those data in programs like gPredict to be able to track the Moon for EME ham operations [^1].
-Instead of creating TLE data, I decided to write a simple Python program, which is able to send antenna rotor control commands to a antenna rotor, to track the Moon.
+Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands [^7] to a antenna rotor, to track the Moon. This e.g. is helpful for EME acitivities in hamradio operating.
 The current azimuth (az) and elevation (el) of the Moon in degrees needed for the tracking, are calculated with the help of the Python library Skyfield [^3]
-The program consists of 2 main components:
-- mrotorctl.py 
-- mrotorctl.py
 
-## Setup
+## Prerequisites
 - You need to have Python 3 installed [^6]
 - You should also have installed pip: `python -m pip install --upgrade pip`
 - Run the `setup.cmd` in the "moonrunner" directory or manually execute `pip install -r requirements.txt` to install the needed libraries like Skyfield.
 - To control a antenna rotor, you need to have set up the rotor control software (running on port 4533 at your "localhost"). But anyway, you can just calculate the Moon's position (az, el) without having a antenna rotor.
 
+## Python classes
+The program consists of 2 main components:
+- **mrotorctl.py** 
+- **mrotorctl.py**
+
 ### mrotorctl.py
-"mrotorctl.py" contains the Python class "MRotController" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
+"mrotorctl.py" contains the Python class "**MRotController**" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
 The usage of the class can be found at the bottom in the main method
 The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" binary from the hamlib w64 4.5 Software [^2], [^5]
 ![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/antrunner_hardware.png)
@@ -69,10 +71,10 @@ Please check the code in the `__main__` section to understand, how you can use t
 ```
 
 ###  moonrunner_gui.py 
- moonrunner_gui.py contains the Python class "GUIMainFrame" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
-This code uses the class MRotController from mrotorctl.py in the same package.
+ moonrunner_gui.py contains the Python class "**GUIMainFrame**" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
+Note: this code uses the class "**MRotController**" from mrotorctl.py in the same package.
 #### Setup
-- You need to change the values in "config.yaml" according to your QTH location and your settings.
+- **You need to change the values in "config.yaml" according to your QTH location and your settings.**
   Changes in rotor parking positions can be re-loaded with File/Load menu.
   If you change the QTH and location data, you need to restart the program.
   You also need to set up the IP and port of the rotor control software (e.g. hamlib "rotctld.exe").
@@ -87,7 +89,7 @@ After start-up, you will see the used configuration data and the current Moon's 
 - File/Load - reload config.yaml (only changes for rotor park positions will be changed in the running software. If you change your QTH location, you need to restart the program).
 - File/Quit - exit the program
 
-- *Note: the following functions will only work, if you have set up an antenna rotor with a rotor control software listening on the defined port and IP.*
+- *Note: the following functions will only work, if you have set up an working antenna rotor with a rotor control software listening on the defined port and IP.*
 - Track: start tracking the Moon (toggle-button on/off)
 - Park: set rotor to the defined park position (az, el)
 - Read: read current rotor position (az, el)
@@ -101,4 +103,4 @@ After start-up, you will see the used configuration data and the current Moon's 
 [^4]: wxPython GUI programing - https://zetcode.com/wxpython/
 [^5]: HamLib Radio Control Libraries, https://sourceforge.net/projects/hamlib/files/hamlib/4.5/
 [^6]: Python, https://www.python.org/downloads/
-
+[^7]: rotctrl, Control  antenna  rotators, https://manpages.ubuntu.com/manpages/xenial/man1/rotctl.1.html
