@@ -95,10 +95,10 @@ After start-up, you will see the used configuration data and the current Moon's 
 ![Screenshot while tracking](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/Screen2_Track.jpg)
 
 ## References
-[^1] Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
-[^2] AntRunner Antenna Rotor (Hardware + Software project from Wu BG5DIW, https://github.com/wuxx/AntRunner
-[^3] Skyfield Python package for atronomical calculations - https://rhodesmill.org/skyfield/
-[^4] wxPython GUI programming - https://zetcode.com/wxpython/
-[^5] HamLib Radio Control Libraries, https://sourceforge.net/projects/hamlib/files/hamlib/4.5/
-[^6] Python, https://www.python.org/downloads/
+[^1]: Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
+[^2]: AntRunner Antenna Rotor (Hardware + Software project from Wu BG5DIW, https://github.com/wuxx/AntRunner
+[^3]: Skyfield Python package for atronomical calculations - https://rhodesmill.org/skyfield/
+[^4]: wxPython GUI programming - https://zetcode.com/wxpython/
+[^5]: HamLib Radio Control Libraries, https://sourceforge.net/projects/hamlib/files/hamlib/4.5/
+[^6]: Python, https://www.python.org/downloads/
 
