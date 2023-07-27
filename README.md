@@ -24,7 +24,7 @@ The program consists of 2 main components:
 ### mrotorctl.py
 "mrotorctl.py" contains the Python class "**MRotController**" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
 The usage of the class can be found at the bottom in the main method.
-The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" binary from the hamlib w64 4.5 Software [^2], [^5]
+The code was tested with the DIY "AntRunner" antenna rotor hardware from @wuxx BG5DIW and the "rotctld.exe" binary from the hamlib w64 4.5 Software [^2], [^5]
 ![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/antrunner_hardware.png)
 #### Start
 Start `python mrotorctl.py` in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
