@@ -7,7 +7,7 @@
 
 ## Introduction
 This project was inspired by Peter's (HB9BNI) idea, to generate "pseudo Kepler TLE" data for the Moon to use those data in programs like gPredict to be able to track the Moon for EME ham operations [^1].
-Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands [^7] to a antenna rotor, to track the Moon. This e.g. is helpful for EME acitivities in hamradio operating.
+Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands [^7] to an antenna rotor, to track the Moon. This e.g. is helpful for EME acitivities in hamradio operating.
 The current azimuth (az) and elevation (el) of the Moon in degrees needed for the tracking, are calculated with the help of the Python library Skyfield [^3]
 
 ## Prerequisites
@@ -74,7 +74,7 @@ Please check the code in the `__main__` section to understand, how you can use t
 moonrunner_gui.py contains the Python class "**GUIMainFrame**" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
 Note: this code uses the class "**MRotController**" from mrotorctl.py in the same package.
 #### Setup
-- **You need to change the values in "`config.yaml`" according to your QTH location and your settings.**
+- **You need to change the values in "config.yaml" according to your QTH location and your settings.**
   Changes in rotor parking positions can be re-loaded with File/Load menu.
   If you change the QTH and location data, you need to restart the program.
   You also need to set up the IP and port of the rotor control software (e.g. hamlib "rotctld.exe").
