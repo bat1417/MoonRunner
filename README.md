@@ -80,13 +80,13 @@ This code uses the class MRotController from mrotorctl.py in the same package.
 #### Start
 Execute `python moonrunner_gui.py` in the moonrunner directory.
 After start-up, you will see the used configuration data and the current Moon's position.
-![Screenshot after startup]https://github.com/bat1417/MoonRunner/moonrunner/Screen1_Start.jpg
+![Screenshot after startup](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/Screen1_Start.jpg)
 ##### Functions
 - *Note: the following will only work, if you have set up an antenna rotor with a rotor control software listening on the defined port and IP.*
 - Track: start tracking the Moon (toggle-button on/off)
 - Park: set rotor to the defined park position (az, el)
 - Read: read current rotor position (az, el)
-![Screenshot while tracking]https://github.com/bat1417/MoonRunner/moonrunner/Screen2_Track.jpg
+![Screenshot while tracking](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/Screen2_Track.jpg)
 
 
 ## References
