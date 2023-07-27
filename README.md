@@ -23,7 +23,7 @@ The program consists of 2 main components:
 
 ### mrotorctl.py
 "mrotorctl.py" contains the Python class "**MRotController**" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
-The usage of the class can be found at the bottom in the main method
+The usage of the class can be found at the bottom in the main method.
 The code was tested with the "AntRunner" antenna rotor and the "rotctld.exe" binary from the hamlib w64 4.5 Software [^2], [^5]
 ![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/antrunner_hardware.png)
 #### Start
@@ -71,10 +71,10 @@ Please check the code in the `__main__` section to understand, how you can use t
 ```
 
 ###  moonrunner_gui.py 
- moonrunner_gui.py contains the Python class "**GUIMainFrame**" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
+moonrunner_gui.py contains the Python class "**GUIMainFrame**" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
 Note: this code uses the class "**MRotController**" from mrotorctl.py in the same package.
 #### Setup
-- **You need to change the values in "config.yaml" according to your QTH location and your settings.**
+- **You need to change the values in "`config.yaml`" according to your QTH location and your settings.**
   Changes in rotor parking positions can be re-loaded with File/Load menu.
   If you change the QTH and location data, you need to restart the program.
   You also need to set up the IP and port of the rotor control software (e.g. hamlib "rotctld.exe").
