@@ -1,4 +1,5 @@
 # MoonRunner
+![Pic from Moon per 30.8.2009 by OE9BKJ](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/moon.png)
  * [Introduction](#Introduction)
  * [Features](#Features)
  * [How to Use](#How-to-use)
