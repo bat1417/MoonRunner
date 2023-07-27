@@ -9,7 +9,7 @@
 This project was inspired by Peter's (HB9BNI) idea, to generate "pseudo Kepler TLE" data for the Moon to use those data in programs like gPredict to be able to track the Moon for EME ham operations [^1].
 Instead of creating TLE data, I decided to write a simple Python program, which is able to send antenna rotor control commands to a antenna rotor, to track the Moon.
 The current azimuth (az) and elevation (el) of the Moon in degrees needed for the tracking, are calculated with the help of the Python library Skyfield [^3]
-The programm consists of 2 main components:
+The program consists of 2 main components:
 - mrotorctl.py 
 - mrotorctl.py
 
@@ -98,7 +98,7 @@ After start-up, you will see the used configuration data and the current Moon's 
 [^1]: Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
 [^2]: AntRunner Antenna Rotor (Hardware + Software project from Wu BG5DIW, https://github.com/wuxx/AntRunner
 [^3]: Skyfield Python package for atronomical calculations - https://rhodesmill.org/skyfield/
-[^4]: wxPython GUI programming - https://zetcode.com/wxpython/
+[^4]: wxPython GUI programing - https://zetcode.com/wxpython/
 [^5]: HamLib Radio Control Libraries, https://sourceforge.net/projects/hamlib/files/hamlib/4.5/
 [^6]: Python, https://www.python.org/downloads/
 
