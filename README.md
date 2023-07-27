@@ -19,7 +19,7 @@ The current azimuth (az) and elevation (el) of the Moon in degrees needed for th
 ## Python classes
 The program consists of 2 main components:
 - **mrotorctl.py** 
-- **mrotorctl.py**
+- **moonrunner_gui.py**
 
 ### mrotorctl.py
 "mrotorctl.py" contains the Python class "**MRotController**" to set a rotor control protocol compatible (antenna-)rotor to the Moon's position (Azimuth az, Elevation el).
