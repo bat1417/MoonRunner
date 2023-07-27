@@ -7,7 +7,7 @@
 
 ## Introduction
 This project was inspired by Peter's (HB9BNI) idea, to generate "pseudo Kepler TLE" data for the Moon to use those data in programs like gPredict to be able to track the Moon for EME ham operations [^1].
-Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands [^7] to an antenna rotor, to track the Moon. This e.g. is helpful for EME acitivities in hamradio operating.
+Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands to an antenna rotor, to track the Moon [^7]. This e.g. is helpful for EME acitivities in hamradio operating.
 The current azimuth (az) and elevation (el) of the Moon in degrees needed for the tracking, are calculated with the help of the Python library Skyfield [^3]
 
 ## Prerequisites
