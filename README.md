@@ -103,4 +103,4 @@ After start-up, you will see the used configuration data and the current Moon's 
 [^4]: wxPython GUI programing - https://zetcode.com/wxpython/
 [^5]: HamLib Radio Control Libraries, https://sourceforge.net/projects/hamlib/files/hamlib/4.5/
 [^6]: Python, https://www.python.org/downloads/
-[^7]: rotctrl, Control  antenna  rotators, https://manpages.ubuntu.com/manpages/xenial/man1/rotctl.1.html
+[^7]: rotctrl, Control  antenna  rotators, https://manpages.ubuntu.com/manpages/xenial/man1/rotctl.1.html 
