@@ -81,6 +81,7 @@ class GUIMainFrame(wx.Frame):
 
         # initalize window
         super().__init__(parent=None, title='MoonRunner v' + str(VERSION) + ' by OE9BKJ', size=(600, 340))
+        self.SetIcon(wx.Icon("img/moon.png"))
         self.SetMinSize((400, 220))
         # Panel with Fields & Buttons
         self.panel = wx.Panel(self)
