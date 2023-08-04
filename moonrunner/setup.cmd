@@ -15,7 +15,7 @@ IF %ERRORLEVEL% NEQ 0 (
 echo "create virtual environment ..."
 python -m venv env
 echo "activate the virtual environment ..."
-.\env\Scripts\activate
+call .\env\Scripts\activate
 echo "install the requirements ..."
 python -m pip install -r requirements.txt
 echo "finished! You can start MoonRunner by double-click on moonrunner_gui.py or 'python moonrunner_gui.py' in a cmd line"
