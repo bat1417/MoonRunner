@@ -13,7 +13,7 @@ IF %ERRORLEVEL% NEQ 0 (
     python --version
 )
 echo "create virtual environment ..."
-python -m venv env
+python -m venv venv
 echo "activate the virtual environment ..."
 call .\env\Scripts\activate
 echo "install the requirements ..."
