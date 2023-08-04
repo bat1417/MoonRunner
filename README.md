@@ -13,7 +13,7 @@ The current azimuth (az) and elevation (el) of the Moon in degrees needed for th
 ## Prerequisites
 - You need to have Python 3 installed [^6]
 - You should also have installed pip: `python -m pip install --upgrade pip`
-- Run the `setup.cmd` in the "moonrunner" directory or manually execute `pip install -r requirements.txt` to install the needed libraries like Skyfield.
+- Run the `setup.cmd` (Windows) or `setup.sh` (Linux) in the "moonrunner" directory or manually create a Virtual Environment (venv) with `python -m venv venv`, activate it and execute `pip install -r requirements.txt` to install the needed libraries like Skyfield.
 - To control a antenna rotor, you need to have set up the rotor control software (running on port 4533 at your "localhost" - this can be configured). But anyway, you can just calculate the Moon's position (az, el) without having a antenna rotor.
 
 ## Python classes
