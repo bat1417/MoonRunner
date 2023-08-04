@@ -4,7 +4,9 @@ python --version 2>nul | findstr /i "Python 3" >nul
 
 IF %ERRORLEVEL% NEQ 0 (
     echo Python 3 is not installed on this system.
-    echo Please install Python 3 from https://www.python.org/downloads/
+    echo Please install Python 3 from the Windows App Store or download from https://www.python.org/downloads/
+    REM start the Windows Appstore installer dummy
+    start python.exe
     exit /b 1
 ) else (
     echo 'found Python:'
