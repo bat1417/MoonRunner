@@ -1,3 +1,4 @@
+# coding: utf8
 from datetime import datetime
 
 import wx
@@ -60,7 +61,7 @@ CONFIG_DATA_DEFAULT = [
         'elevation_m': 500,  # the elevation above sea at the QTH [m]
         'rotctld_ip': '127.0.0.1',  # default IP for rotor control software
         'rotctld_port': 4533,  # default port for rotor control software
-        'rotctld_park_az': 0.00,  # default azimuth of park position [°]
+        'rotctld_park_az': 0.00,  # default azimuth of park position [Degree]
         'rotctld_park_el': 0.00,  # default elevation of park position [°]
         'rotctld_park_max_el': 90  # max elevation of park position [°]
     }
@@ -154,7 +155,6 @@ class GUIMainFrame(wx.Frame):
         self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer3 = wx.BoxSizer(wx.HORIZONTAL)
 
-
         # static labels for Moon and Rotor
         bold_font = wx.Font(wx.FontInfo(10).Bold())
 
@@ -200,15 +200,18 @@ class GUIMainFrame(wx.Frame):
         else:
             self.lbl_moon_el.SetForegroundColour(wx.Colour(0, 0, 0))
 
-        self.sizer1.AddMany([self.lbl_moon, wx.StaticText(self.panel, label=""), self.lbl_rotor, wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""),
-                             self.btn_track, self.lbl_moon_az, self.btn_park, self.lbl_az, self.txt_ctrl_az, self.btn_read, self.txt_ctrl_read_az,
-                             wx.StaticText(self.panel, label=""), self.lbl_moon_el, wx.StaticText(self.panel, label=""), self.lbl_el, self.txt_ctrl_el, wx.StaticText(self.panel, label=""), self.txt_ctrl_read_el])
-
+        self.sizer1.AddMany(
+            [self.lbl_moon, wx.StaticText(self.panel, label=""), self.lbl_rotor, wx.StaticText(self.panel, label=""),
+             wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""),
+             wx.StaticText(self.panel, label=""),
+             self.btn_track, self.lbl_moon_az, self.btn_park, self.lbl_az, self.txt_ctrl_az, self.btn_read,
+             self.txt_ctrl_read_az,
+             wx.StaticText(self.panel, label=""), self.lbl_moon_el, wx.StaticText(self.panel, label=""), self.lbl_el,
+             self.txt_ctrl_el, wx.StaticText(self.panel, label=""), self.txt_ctrl_read_el])
 
         self.sizer2.Add(self.lbl_help, flag=wx.ALL | wx.EXPAND, border=15)
         self.sizer2.Add(self.lbl_config, flag=wx.ALL | wx.EXPAND, border=15)
         self.sizer3.Add(self.url_link, flag=wx.ALL | wx.EXPAND, border=15)
-
 
         self.wrapper.Add(self.sizer1, 1, wx.EXPAND, border=15)
         self.wrapper.Add(self.sizer2, 1, wx.EXPAND, border=15)
@@ -220,11 +223,10 @@ class GUIMainFrame(wx.Frame):
         self.load_config()
         self.Show()
 
-
     def create_input_fields(self, e):
         self.lbl_az = wx.StaticText(self.panel, label="az")
         self.txt_ctrl_az = wx.TextCtrl(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
-                                        size=(50, -1))
+                                       size=(50, -1))
 
         self.lbl_el = wx.StaticText(self.panel, label="el")
         self.txt_ctrl_el = wx.TextCtrl(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
