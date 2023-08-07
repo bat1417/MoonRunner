@@ -48,7 +48,7 @@ from mrotorctl import MRotController
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 DEBUG = True
-VERSION = 1.0
+VERSION = 1.1
 URL_LINK = "https://github.com/bat1417/MoonRunner/"
 
 # This default config is used, to write the config.yaml, if not present after start
@@ -164,7 +164,7 @@ class GUIMainFrame(wx.Frame):
         self.lbl_rotor.SetFont(bold_font)
 
         # help note
-        help_text = "Press ENTER to change park pos values"
+        help_text = "Valid park pos values:"
         help_text += "\naz: 0..360, el: 0.." + str(self.rotctld_park_max_el)
         self.lbl_help = wx.StaticText(self.panel, wx.ID_ANY, help_text)
         self.lbl_help.SetForegroundColour(wx.Colour(0, 0, 200))
@@ -201,21 +201,21 @@ class GUIMainFrame(wx.Frame):
             self.lbl_moon_el.SetForegroundColour(wx.Colour(0, 0, 0))
 
         self.sizer1.AddMany(
-            [self.lbl_moon, wx.StaticText(self.panel, label=""), self.lbl_rotor, wx.StaticText(self.panel, label=""),
+            [(self.lbl_moon, 0, wx.EXPAND | wx.ALL, 5), wx.StaticText(self.panel, label=""), (self.lbl_rotor, 0, wx.EXPAND | wx.ALL, 5), wx.StaticText(self.panel, label=""),
              wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""),
              wx.StaticText(self.panel, label=""),
-             self.btn_track, self.lbl_moon_az, self.btn_park, self.lbl_az, self.txt_ctrl_az, self.btn_read,
+             (self.btn_track, 0, wx.EXPAND | wx.ALL, 5) , self.lbl_moon_az, (self.btn_park, 0, wx.EXPAND | wx.ALL, 5), self.lbl_az, self.txt_ctrl_az, (self.btn_read, 0, wx.EXPAND | wx.ALL, 5),
              self.txt_ctrl_read_az,
              wx.StaticText(self.panel, label=""), self.lbl_moon_el, wx.StaticText(self.panel, label=""), self.lbl_el,
              self.txt_ctrl_el, wx.StaticText(self.panel, label=""), self.txt_ctrl_read_el])
 
-        self.sizer2.Add(self.lbl_help, flag=wx.ALL | wx.EXPAND, border=15)
-        self.sizer2.Add(self.lbl_config, flag=wx.ALL | wx.EXPAND, border=15)
-        self.sizer3.Add(self.url_link, flag=wx.ALL | wx.EXPAND, border=15)
+        self.sizer2.Add(self.lbl_help, flag=wx.ALL | wx.EXPAND, border=10)
+        self.sizer2.Add(self.lbl_config, flag=wx.ALL | wx.EXPAND, border=10)
+        self.sizer3.Add(self.url_link, flag=wx.ALL | wx.EXPAND, border=10)
 
-        self.wrapper.Add(self.sizer1, 1, wx.EXPAND, border=15)
-        self.wrapper.Add(self.sizer2, 1, wx.EXPAND, border=15)
-        self.wrapper.Add(self.sizer3, 1, wx.EXPAND, border=15)
+        self.wrapper.Add(self.sizer1, 1, wx.EXPAND, border=10)
+        self.wrapper.Add(self.sizer2, 1, wx.EXPAND, border=10)
+        self.wrapper.Add(self.sizer3, 1, wx.EXPAND, border=10)
 
         self.panel.SetSizer(self.wrapper)
 
@@ -225,16 +225,16 @@ class GUIMainFrame(wx.Frame):
 
     def create_input_fields(self, e):
         self.lbl_az = wx.StaticText(self.panel, label="az")
-        self.txt_ctrl_az = wx.TextCtrl(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
-                                       size=(50, -1))
+        self.txt_ctrl_az = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
+                                       size=(50, -1), inc=1.0,  min=0, max=360)
 
         self.lbl_el = wx.StaticText(self.panel, label="el")
-        self.txt_ctrl_el = wx.TextCtrl(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
-                                       size=(50, -1))
+        self.txt_ctrl_el = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
+                                       size=(50, -1), inc=1.0, min=0, max=self.rotctld_park_max_el)
 
         # Bind the EVT_TEXT event to the handler function
-        self.txt_ctrl_az.Bind(wx.EVT_TEXT_ENTER, self.on_text_ctrl_change)
-        self.txt_ctrl_el.Bind(wx.EVT_TEXT_ENTER, self.on_text_ctrl_change)
+        self.txt_ctrl_az.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
+        self.txt_ctrl_el.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
 
     def on_text_ctrl_change(self, event):
         # Get the value from the changed input field
