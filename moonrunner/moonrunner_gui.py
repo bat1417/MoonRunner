@@ -1,3 +1,4 @@
+# coding: utf8
 from datetime import datetime
 
 import wx
@@ -47,7 +48,7 @@ from mrotorctl import MRotController
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 DEBUG = True
-VERSION = 1.0
+VERSION = 1.1
 URL_LINK = "https://github.com/bat1417/MoonRunner/"
 
 # This default config is used, to write the config.yaml, if not present after start
@@ -60,7 +61,7 @@ CONFIG_DATA_DEFAULT = [
         'elevation_m': 500,  # the elevation above sea at the QTH [m]
         'rotctld_ip': '127.0.0.1',  # default IP for rotor control software
         'rotctld_port': 4533,  # default port for rotor control software
-        'rotctld_park_az': 0.00,  # default azimuth of park position [°]
+        'rotctld_park_az': 0.00,  # default azimuth of park position [Degree]
         'rotctld_park_el': 0.00,  # default elevation of park position [°]
         'rotctld_park_max_el': 90  # max elevation of park position [°]
     }
@@ -80,9 +81,9 @@ class GUIMainFrame(wx.Frame):
         self.rotctld_read_el = self.rotctld_park_el
 
         # initalize window
-        super().__init__(parent=None, title='MoonRunner v' + str(VERSION) + ' by OE9BKJ', size=(600, 340))
+        super().__init__(parent=None, title='MoonRunner v' + str(VERSION) + ' by OE9BKJ')
         self.SetIcon(wx.Icon("img/moon.png"))
-        self.SetMinSize((400, 220))
+        self.SetMinSize((600, 310))
         # Panel with Fields & Buttons
         self.panel = wx.Panel(self)
 
@@ -148,65 +149,92 @@ class GUIMainFrame(wx.Frame):
         self.SetMenuBar(menubar)
         self.Bind(wx.EVT_MENU, self.on_file_load, loadItem)
 
+        # GUI Layout with GridSizer
+        self.wrapper = wx.BoxSizer(wx.VERTICAL)
+        self.sizer1 = wx.FlexGridSizer(3, 7, 15, 15)
+        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer3 = wx.BoxSizer(wx.HORIZONTAL)
+
         # static labels for Moon and Rotor
         bold_font = wx.Font(wx.FontInfo(10).Bold())
-        self.lbl_moon = wx.StaticText(self.panel, label="Moon", pos=(10, 5))
+
+        self.lbl_moon = wx.StaticText(self.panel, label="Moon")
         self.lbl_moon.SetFont(bold_font)
-        self.lbl_rotor = wx.StaticText(self.panel, label="Rotor", pos=(200, 5))
+        self.lbl_rotor = wx.StaticText(self.panel, label="Rotor")
         self.lbl_rotor.SetFont(bold_font)
 
         # help note
-        help_text = "Press ENTER to change park pos values"
+        help_text = "Valid park pos values:"
         help_text += "\naz: 0..360, el: 0.." + str(self.rotctld_park_max_el)
-        self.panel.lbl_help = wx.StaticText(self.panel, wx.ID_ANY, help_text, pos=(200, 110))
-        self.panel.lbl_help.SetForegroundColour(wx.Colour(0, 0, 200))
+        self.lbl_help = wx.StaticText(self.panel, wx.ID_ANY, help_text)
+        self.lbl_help.SetForegroundColour(wx.Colour(0, 0, 200))
         # link to project
         self.url_link = hl.HyperLinkCtrl(self.panel, -1, URL_LINK, URL=URL_LINK, pos=(200, 250))
 
         # static label to show config-data
-        self.panel.lbl_config = wx.StaticText(self.panel, wx.ID_ANY, self.get_label_text(self), pos=(10, 150))
+        self.lbl_config = wx.StaticText(self.panel, wx.ID_ANY, self.get_label_text(self), pos=(10, 150))
 
         # create the Buttons with their actions
-        self.btn_track = wx.ToggleButton(self.panel, wx.ID_ANY, label='Track', pos=(10, 25))
+        self.btn_track = wx.ToggleButton(self.panel, wx.ID_ANY, label='Track')
         self.btn_track.Bind(wx.EVT_TOGGLEBUTTON, self.on_btn_track)
 
-        btn_park = wx.Button(self.panel, wx.ID_ANY, label='Park', pos=(200, 25))
-        btn_park.Bind(wx.EVT_BUTTON, self.on_btn_park)
+        self.btn_park = wx.Button(self.panel, wx.ID_ANY, label='Park')
+        self.btn_park.Bind(wx.EVT_BUTTON, self.on_btn_park)
 
-        btn_read = wx.Button(self.panel, wx.ID_ANY, label='Read', pos=(370, 25))
-        btn_read.Bind(wx.EVT_BUTTON, self.on_btn_read)
+        self.btn_read = wx.Button(self.panel, wx.ID_ANY, label='Read')
+        self.btn_read.Bind(wx.EVT_BUTTON, self.on_btn_read)
 
         # create input fields for az, el of rotor
         self.create_input_fields(self)
 
         # create fields to display the rotor position
-        self.lbl_az = wx.StaticText(self.panel, label=str(self.rotctld_read_az), pos=(450, 25))
-        self.lbl_el = wx.StaticText(self.panel, label=str(self.rotctld_read_az), pos=(450, 75))
+        self.txt_ctrl_read_az = wx.StaticText(self.panel, label=str(self.rotctld_read_az))
+        self.txt_ctrl_read_el = wx.StaticText(self.panel, label=str(self.rotctld_read_az))
 
         # create fields to display the Moon's position
-        self.lbl_moon_az = wx.StaticText(self.panel, label="Moon az = " + str(self.moon_pos[0]), pos=(90, 25))
-        self.lbl_moon_el = wx.StaticText(self.panel, label="Moon el = " + str(self.moon_pos[1]), pos=(90, 75))
+        self.lbl_moon_az = wx.StaticText(self.panel, label="Moon az = " + str(self.moon_pos[0]))
+        self.lbl_moon_el = wx.StaticText(self.panel, label="Moon el = " + str(self.moon_pos[1]))
         # notify negative elevation (not visible)
         if (self.moon_pos[1]) <= 0:
             self.lbl_moon_el.SetForegroundColour(wx.Colour(255, 0, 0))
         else:
             self.lbl_moon_el.SetForegroundColour(wx.Colour(0, 0, 0))
 
-        self.Show(True)
-        self.Refresh()
+        self.sizer1.AddMany(
+            [(self.lbl_moon, 0, wx.EXPAND | wx.ALL, 5), wx.StaticText(self.panel, label=""), (self.lbl_rotor, 0, wx.EXPAND | wx.ALL, 5), wx.StaticText(self.panel, label=""),
+             wx.StaticText(self.panel, label=""), wx.StaticText(self.panel, label=""),
+             wx.StaticText(self.panel, label=""),
+             (self.btn_track, 0, wx.EXPAND | wx.ALL, 5) , self.lbl_moon_az, (self.btn_park, 0, wx.EXPAND | wx.ALL, 5), self.lbl_az, self.txt_ctrl_az, (self.btn_read, 0, wx.EXPAND | wx.ALL, 5),
+             self.txt_ctrl_read_az,
+             wx.StaticText(self.panel, label=""), self.lbl_moon_el, wx.StaticText(self.panel, label=""), self.lbl_el,
+             self.txt_ctrl_el, wx.StaticText(self.panel, label=""), self.txt_ctrl_read_el])
+
+        self.sizer2.Add(self.lbl_help, flag=wx.ALL | wx.EXPAND, border=10)
+        self.sizer2.Add(self.lbl_config, flag=wx.ALL | wx.EXPAND, border=10)
+        self.sizer3.Add(self.url_link, flag=wx.ALL | wx.EXPAND, border=10)
+
+        self.wrapper.Add(self.sizer1, 1, wx.EXPAND, border=10)
+        self.wrapper.Add(self.sizer2, 1, wx.EXPAND, border=10)
+        self.wrapper.Add(self.sizer3, 1, wx.EXPAND, border=10)
+
+        self.panel.SetSizer(self.wrapper)
+
+        self.Centre()
+        self.load_config()
+        self.Show()
 
     def create_input_fields(self, e):
-        self.lbl_az = wx.StaticText(self.panel, label="az", pos=(280, 25))
-        self.txt_ctrl_az = wx.TextCtrl(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
-                                       pos=(300, 25), size=(50, -1))
+        self.lbl_az = wx.StaticText(self.panel, label="az")
+        self.txt_ctrl_az = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
+                                       size=(50, -1), inc=1.0,  min=0, max=360)
 
-        self.lbl_el = wx.StaticText(self.panel, label="el", pos=(280, 75))
-        self.txt_ctrl_el = wx.TextCtrl(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
-                                       pos=(300, 75), size=(50, -1))
+        self.lbl_el = wx.StaticText(self.panel, label="el")
+        self.txt_ctrl_el = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
+                                       size=(50, -1), inc=1.0, min=0, max=self.rotctld_park_max_el)
 
         # Bind the EVT_TEXT event to the handler function
-        self.txt_ctrl_az.Bind(wx.EVT_TEXT_ENTER, self.on_text_ctrl_change)
-        self.txt_ctrl_el.Bind(wx.EVT_TEXT_ENTER, self.on_text_ctrl_change)
+        self.txt_ctrl_az.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
+        self.txt_ctrl_el.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
 
     def on_text_ctrl_change(self, event):
         # Get the value from the changed input field
@@ -229,7 +257,7 @@ class GUIMainFrame(wx.Frame):
             self.rotctld_park_el = tmp
             self.txt_ctrl_el.SetValue(str(tmp))
 
-        self.panel.lbl_config.SetLabel(self.get_label_text(self))
+        self.lbl_config.SetLabel(self.get_label_text(self))
         self.Refresh()
 
     def on_btn_park(self, e):
@@ -248,8 +276,8 @@ class GUIMainFrame(wx.Frame):
         pos = self.rotctl.get_rotor_position()
         self.rotctld_read_az = pos[0]
         self.rotctld_read_el = pos[1]
-        self.lbl_az.SetLabel(str(self.rotctld_read_az))
-        self.lbl_el.SetLabel(str(self.rotctld_read_el))
+        self.txt_ctrl_read_az.SetLabel(str(self.rotctld_read_az))
+        self.txt_ctrl_read_el.SetLabel(str(self.rotctld_read_el))
 
     def on_file_quit(self, e):
         self.Close()
@@ -262,7 +290,7 @@ class GUIMainFrame(wx.Frame):
         self.txt_ctrl_az.SetValue(str(self.rotctld_park_az))
         self.txt_ctrl_el.SetValue(str(self.rotctld_park_el))
 
-        self.panel.lbl_config.SetLabel(self.get_label_text(self))
+        self.lbl_config.SetLabel(self.get_label_text(self))
         self.Refresh()
 
     def on_timer(self, e):
