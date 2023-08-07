@@ -17,10 +17,9 @@ The current azimuth (az) and elevation (el) of the Moon in degrees needed for th
 - Run the `setup.cmd`
 ### Linux Setup
 - On Ubuntu based distributions, run this before: `sudo apt-get install libgtk-3-dev`
-- run the `setup.sh` (Linux) in the "moonrunner" directory
--- Note: GTK needs to run "Building wheel for wxPython" - this can take > 1 hour!
+- run the `setup.sh` (Linux) in the "moonrunner" directory. *Note: GTK needs to run "Building wheel for wxPython" - this can take > 1 hour!*
   
-### Manual Installation
+### Manual Setup
 Manually create a Virtual Environment (venv) with `python -m venv venv`, activate it and execute `pip install -r requirements.txt` to install the needed libraries like Skyfield.
 ### Rotor Control Software (rotctld)
 - To control a antenna rotor, you need to have set up the rotor control software (running on port 4533 at your "localhost" - this can be configured). But anyway, you can just calculate the Moon's position (az, el) without having a antenna rotor.
