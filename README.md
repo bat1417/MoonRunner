@@ -1,8 +1,8 @@
 # MoonRunner
 ![Pic from Moon per 30.8.2009 by OE9BKJ](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/moon.png)
  * [Introduction](#Introduction)
- * [Features](#Features)
- * [How to Use](#How-to-use)
+ * [Setup](#Setup)
+ * [Python-classes](#Python-classes)
  * [References](#References)
 
 ## Introduction
@@ -10,7 +10,7 @@ This project was inspired by Peter's (HB9BNI) idea, to generate "pseudo Kepler T
 Instead of creating TLE data, I decided to write a simple Python program, which is able to calculate Moon's position and send the appropriate antenna rotor control protocol commands to an antenna rotor, to track the Moon [^7]. This e.g. is helpful for EME acitivities in hamradio operating.
 The current azimuth (az) and elevation (el) of the Moon in degrees needed for the tracking, are calculated with the help of the Python library Skyfield [^3]
 
-## Prerequisites
+## Setup
 - You need to have Python 3 installed [^6]
 - You should also have installed pip: `python -m pip install --upgrade pip`
 ### Windows Setup
@@ -24,7 +24,7 @@ Manually create a Virtual Environment (venv) with `python -m venv venv`, activat
 ### Rotor Control Software (rotctld)
 - To control a antenna rotor, you need to have set up the rotor control software (running on port 4533 at your "localhost" - this can be configured). But anyway, you can just calculate the Moon's position (az, el) without having a antenna rotor.
 
-## Python classes
+## Python-classes
 The program consists of 2 main components:
 - **mrotorctl.py** 
 - **moonrunner_gui.py**
@@ -81,7 +81,7 @@ Please check the code in the `__main__` section to understand, how you can use t
 ###  moonrunner_gui.py 
 moonrunner_gui.py contains the Python class "**GUIMainFrame**" to create a simple Windows GUI to control a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
 Note: this code uses the class "**MRotController**" from mrotorctl.py in the same package.
-#### Setup
+#### Configuration
 - **You need to change the values in "config.yaml" according to your QTH location and your settings.**
   Changes in rotor parking positions can be re-loaded with File/Load menu.
   If you change the QTH and location data, you need to restart the program.
