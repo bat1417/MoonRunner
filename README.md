@@ -36,7 +36,7 @@ The code was tested with the DIY "AntRunner" antenna rotor hardware from Wu Jian
 ![Picture of AntRunner rotor](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/antrunner_hardware.png)
 #### Start
 Start `python mrotorctl.py` in the "moonrunner" directory. This will try to calculate Moon's position and send a "P" command via rotor control protocol on port 4533 at your "localhost".
-Please check the code in the `__main__` section to understand, how you can use the class MRotController. You can modify your QTH location and the timestamps for obersvations here
+Please check the code in the `__main__` section to understand, how you can use the class MRotController. You can modify your QTH location and the timestamps for observations here
 
 ```
     # set IP and Port of Rotor Ctrl software (e.g. hamlib)
@@ -89,13 +89,14 @@ Note: this code uses the class "**MRotController**" from mrotorctl.py in the sam
   If the file config.yaml is not present, it will be written at startup  with the values from CONFIG_DATA_DEFAULT in the code. 
 #### Start
 Execute `python moonrunner_gui.py` in the moonrunner directory.
+In a Windows environment, with Python3 installed, you can just double-click on `moonrunner_gui.py` - this will start the program.
 After start-up, you will see the used configuration data and the current Moon's position.
 
 ![Screenshot after startup](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/Screen1_Start.png)
 
 ##### Functions
 - File/Load - reload config.yaml (only changes for rotor park positions will be changed in the running software. If you change your QTH location, you need to restart the program).
-- File/Quit - exit the program
+- File/Quit - exit the program.
 
 - *Note: the following functions will only work, if you have set up an working antenna rotor with a rotor control software listening on the defined port and IP.*
 - Track: start tracking the Moon (toggle-button on/off)
