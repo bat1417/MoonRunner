@@ -106,6 +106,15 @@ After start-up, you will see the used configuration data and the current Moon's 
 
 ![Screenshot while tracking](https://github.com/bat1417/MoonRunner/blob/main/moonrunner/img/Screen2_Track.png)
 
+### picamera_live_wx.py
+This is a small python code to use a Raspberry Pi 5 Camera to view the image and save it. E.g. having the camera mounted 
+on the rotor to view the Moon.
+Note: you need to add this dependencies to the requirements.txt file or install them manually with pip.
+- picamera2
+- rpi-libcamera
+
+
+
 ## References
 [^1]: Calculating the Sun and Moon's Kepler Elements, P. Gerber, HB9BNI: VHF. Communications 21(1989)/4: 205-210, https://worldradiohistory.com/Archive-DX/VHF-Communications/VHF-COMM.1989.4.pdf
 [^2]: AntRunner Antenna Rotor (Hardware + Software project from Wu BG5DIW, https://github.com/wuxx/AntRunner
