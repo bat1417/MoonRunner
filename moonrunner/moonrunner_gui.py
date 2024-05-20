@@ -5,6 +5,7 @@ import wx
 import wx.lib.agw.hyperlink as hl
 import yaml
 from mrotorctl import MRotController
+import os
 
 # moonrunner_gui.py contains the Python class "GUIMainFrame" to create a simple GUI to control
 # a rotor control protocol compatible (antenna-)rotor to track the Moon's position (Azimuth az, Elevation el).
@@ -29,7 +30,7 @@ from mrotorctl import MRotController
 #
 # OE9BKJ - https://www.qrz.com/db/oe9bkj
 # 2023-07-26 v1.0
-#
+# 2024-05-20 v1.2
 
 
 # GPL 3 License Statement
@@ -48,7 +49,7 @@ from mrotorctl import MRotController
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 DEBUG = True
-VERSION = 1.1
+VERSION = 1.2
 URL_LINK = "https://github.com/bat1417/MoonRunner/"
 
 # This default config is used, to write the config.yaml, if not present after start
@@ -82,7 +83,13 @@ class GUIMainFrame(wx.Frame):
 
         # initalize window
         super().__init__(parent=None, title='MoonRunner v' + str(VERSION) + ' by OE9BKJ')
-        self.SetIcon(wx.Icon("img/moon.png"))
+        print(os.getcwd())
+        image_path = os.path.join('img', 'moon.png')
+        if os.path.exists(image_path):
+            self.SetIcon(wx.Icon(image_path))
+        else:
+            print(f"File not found: {image_path}")
+        
         self.SetMinSize((600, 310))
         # Panel with Fields & Buttons
         self.panel = wx.Panel(self)
