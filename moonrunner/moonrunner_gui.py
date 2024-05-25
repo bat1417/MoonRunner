@@ -3,6 +3,7 @@ from datetime import datetime
 
 import wx
 import wx.lib.agw.hyperlink as hl
+import minispinctrl as MSC
 import yaml
 from mrotorctl import MRotController
 import os
@@ -62,8 +63,8 @@ CONFIG_DATA_DEFAULT = [
         'elevation_m': 500,  # the elevation above sea at the QTH [m]
         'rotctld_ip': '127.0.0.1',  # default IP for rotor control software
         'rotctld_port': 4533,  # default port for rotor control software
-        'rotctld_park_az': 0.00,  # default azimuth of park position [Degree]
-        'rotctld_park_el': 0.00,  # default elevation of park position [°]
+        'rotctld_park_az': 0,  # default azimuth of park position [Degree]
+        'rotctld_park_el': 0,  # default elevation of park position [°]
         'rotctld_park_max_el': 90  # max elevation of park position [°]
     }
 ]
@@ -74,9 +75,9 @@ class GUIMainFrame(wx.Frame):
         self.debug = debug
         # initialize/load config
         self.config_data = self.load_config()
-        self.rotctld_park_az = float(self.config_data[0]['rotctld_park_az'])
-        self.rotctld_park_el = float(self.config_data[0]['rotctld_park_el'])
-        self.rotctld_park_max_el = float(self.config_data[0]['rotctld_park_max_el'])
+        self.rotctld_park_az = int(self.config_data[0]['rotctld_park_az'])
+        self.rotctld_park_el = int(self.config_data[0]['rotctld_park_el'])
+        self.rotctld_park_max_el = int(self.config_data[0]['rotctld_park_max_el'])
 
         self.rotctld_read_az = self.rotctld_park_az
         self.rotctld_read_el = self.rotctld_park_el
@@ -232,37 +233,38 @@ class GUIMainFrame(wx.Frame):
 
     def create_input_fields(self, e):
         self.lbl_az = wx.StaticText(self.panel, label="az")
-        self.txt_ctrl_az = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
-                                       size=(50, -1), inc=1.0,  min=0, max=360)
+        #self.txt_ctrl_az = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_az), style=wx.TE_PROCESS_ENTER,
+        #                               size=(50, -1), inc=1.0,  min=0, max=360)
+        
+        self.txt_ctrl_az = MSC.MiniSpinCtrl(self.panel, -1, size=(50,33), min=0, max=360, initial=int(self.rotctld_park_az))
 
         self.lbl_el = wx.StaticText(self.panel, label="el")
-        self.txt_ctrl_el = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
-                                       size=(50, -1), inc=1.0, min=0, max=self.rotctld_park_max_el)
+        #self.txt_ctrl_el = wx.SpinCtrlDouble(self.panel, value=str(self.rotctld_park_el), style=wx.TE_PROCESS_ENTER,
+        #                               size=(50, -1), inc=1.0, min=0, max=self.rotctld_park_max_el)
+        self.txt_ctrl_el = MSC.MiniSpinCtrl(self.panel, -1, size=(50,33), min=0, max=self.rotctld_park_max_el, initial=int(self.rotctld_park_el))
 
         # Bind the EVT_TEXT event to the handler function
-        self.txt_ctrl_az.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
-        self.txt_ctrl_el.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_text_ctrl_change)
+        self.txt_ctrl_az.Bind(MSC.EVT_MINISPINCTRL, self.on_spin_ctrl_change)
+        self.txt_ctrl_el.Bind(MSC.EVT_MINISPINCTRL, self.on_spin_ctrl_change)
 
-    def on_text_ctrl_change(self, event):
+    def on_spin_ctrl_change(self, event):
         # Get the value from the changed input field
-        input_value = event.GetString()
+        tmp = event.GetValue()
 
-        # Check which input field triggered the event
-        tmp = float(input_value)
         if event.GetEventObject() == self.txt_ctrl_az:
             if tmp < 0:
-                tmp = 0.0
+                tmp = 0
             elif tmp > 360:
-                tmp = 360.0
+                tmp = 360
             self.rotctld_park_az = tmp
-            self.txt_ctrl_az.SetValue(str(tmp))
+            self.txt_ctrl_az.SetValue(tmp)
         elif event.GetEventObject() == self.txt_ctrl_el:
             if tmp < 0:
-                tmp = 0.0
+                tmp = 0
             elif tmp > self.rotctld_park_max_el:
                 tmp = self.rotctld_park_max_el
             self.rotctld_park_el = tmp
-            self.txt_ctrl_el.SetValue(str(tmp))
+            self.txt_ctrl_el.SetValue(tmp)
 
         self.lbl_config.SetLabel(self.get_label_text(self))
         self.Refresh()
@@ -291,9 +293,9 @@ class GUIMainFrame(wx.Frame):
 
     def on_file_load(self, e):
         self.config_data = self.load_config()
-        self.rotctld_park_az = float(self.config_data[0]['rotctld_park_az'])
-        self.rotctld_park_el = float(self.config_data[0]['rotctld_park_el'])
-        self.rotctld_park_max_el = float(self.config_data[0]['rotctld_park_max_el'])
+        self.rotctld_park_az = int(self.config_data[0]['rotctld_park_az'])
+        self.rotctld_park_el = int(self.config_data[0]['rotctld_park_el'])
+        self.rotctld_park_max_el = int(self.config_data[0]['rotctld_park_max_el'])
         self.txt_ctrl_az.SetValue(str(self.rotctld_park_az))
         self.txt_ctrl_el.SetValue(str(self.rotctld_park_el))
 
