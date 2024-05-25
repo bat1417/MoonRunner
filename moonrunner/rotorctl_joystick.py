@@ -1,5 +1,10 @@
 import wx
 import math
+from mrotorctl import MRotController
+import yaml
+import time
+
+DEBUG=False
 
 class JoystickPanel(wx.Panel):
     def __init__(self, parent, main_frame):
@@ -10,6 +15,7 @@ class JoystickPanel(wx.Panel):
         self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
         self.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
         self.Bind(wx.EVT_MOTION, self.OnMouseMove)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
 
         self.joystick_center = wx.Point(220, 200)
         self.joystick_position = self.joystick_center
@@ -93,8 +99,41 @@ class JoystickPanel(wx.Panel):
         self.Refresh()
         self.main_frame.UpdateValues(0, 0)
 
+    def OnKeyDown(self, event):
+        key_code = event.GetKeyCode()
+        max_elevation = 90
+        max_azimuth = 360
+
+        if key_code == wx.WXK_UP:
+            self.elevation = min(max_elevation, self.elevation + 0.5)
+        elif key_code == wx.WXK_DOWN:
+            self.elevation = max(0, self.elevation - 0.5)
+        elif key_code == wx.WXK_RIGHT:
+            self.azimuth = (self.azimuth + 0.5) % max_azimuth
+        elif key_code == wx.WXK_LEFT:
+            self.azimuth = (self.azimuth - 0.5) % max_azimuth
+        else:
+            event.Skip()
+            return
+
+        self.update_joystick_position()
+        self.Refresh()
+        self.main_frame.UpdateValues(self.azimuth, self.elevation)   
+
+    def update_joystick_position(self):
+        radius = 100 * (self.elevation / 90)  # scale position by elevation
+        angle_rad = math.radians(self.azimuth - 90)  # convert azimuth to radians, adjusting for orientation
+        x = self.joystick_center.x + radius * math.cos(angle_rad)
+        y = self.joystick_center.y + radius * math.sin(angle_rad)
+        self.joystick_position = wx.Point(int(x), int(y))             
+
 class MainFrame(wx.Frame):
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
+
+        # initialize/load config
+        self.config_data = self.load_config()
+
         wx.Frame.__init__(self, None, title="Rotor Joystick Control", size=(440, 440))
         panel = wx.Panel(self)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -109,8 +148,19 @@ class MainFrame(wx.Frame):
         sizer.Add(self.reset_button, 0, wx.EXPAND | wx.ALL, 5)
         self.reset_button.Bind(wx.EVT_BUTTON, self.OnResetButton)
 
+        # create a MRotController instance and initialize
+        self.rotctl = MRotController(self.config_data[0]['rotctld_ip'], self.config_data[0]['rotctld_port'],
+                                     debug=self.debug)
+        self.rotctl.set_observer_location(self.config_data[0]['latitude'], self.config_data[0]['longitude'],
+                                          elevation_m=self.config_data[0]['elevation_m'])
+
+
         panel.SetSizer(sizer)
         self.Show()
+
+        # Timer-related attributes for UpdateValues
+        self.last_update_time = 0
+        self.update_interval = 0.05  # 50 milliseconds
 
     def OnResetButton(self, event):
         self.joystick_panel.ResetToCenter()
@@ -119,7 +169,26 @@ class MainFrame(wx.Frame):
         print(f"Azimuth: {azimuth:.2f}°")
         print(f"Elevation: {elevation:.2f}°")
 
+        current_time = time.time()
+        if current_time - self.last_update_time >= self.update_interval:
+            print(f"Azimuth: {azimuth:.2f}�")
+            print(f"Elevation: {elevation:.2f}�")
+            self.rotctl.park_rotor(az=azimuth, el=elevation)
+            self.last_update_time = current_time
+
+    def load_config(self):
+        try:
+            with open("config.yaml", "r") as yamlfile:
+                config_data = yaml.load(yamlfile, Loader=yaml.FullLoader)
+                print("Config: ", config_data)
+                yamlfile.close()
+        except FileNotFoundError:
+            self.initial_save_config()
+            config_data = self.load_config()
+        return config_data
+
+
 if __name__ == "__main__":
     app = wx.App(False)
-    frame = MainFrame()
+    frame = MainFrame(debug=DEBUG)
     app.MainLoop()
