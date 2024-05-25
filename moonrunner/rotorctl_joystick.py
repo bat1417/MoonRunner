@@ -5,6 +5,8 @@ import yaml
 import time
 
 DEBUG=False
+ARROW_DEGREE_DELTA = 0.2
+TIMER_DELTA = 0.02 # 20ms
 
 class JoystickPanel(wx.Panel):
     def __init__(self, parent, main_frame):
@@ -105,13 +107,13 @@ class JoystickPanel(wx.Panel):
         max_azimuth = 360
 
         if key_code == wx.WXK_UP:
-            self.elevation = min(max_elevation, self.elevation + 0.5)
+            self.elevation = min(max_elevation, self.elevation + ARROW_DEGREE_DELTA)
         elif key_code == wx.WXK_DOWN:
-            self.elevation = max(0, self.elevation - 0.5)
+            self.elevation = max(0, self.elevation - ARROW_DEGREE_DELTA)
         elif key_code == wx.WXK_RIGHT:
-            self.azimuth = (self.azimuth + 0.5) % max_azimuth
+            self.azimuth = (self.azimuth + ARROW_DEGREE_DELTA) % max_azimuth
         elif key_code == wx.WXK_LEFT:
-            self.azimuth = (self.azimuth - 0.5) % max_azimuth
+            self.azimuth = (self.azimuth - ARROW_DEGREE_DELTA) % max_azimuth
         else:
             event.Skip()
             return
@@ -160,7 +162,7 @@ class MainFrame(wx.Frame):
 
         # Timer-related attributes for UpdateValues
         self.last_update_time = 0
-        self.update_interval = 0.05  # 50 milliseconds
+        self.update_interval = TIMER_DELTA 
 
     def OnResetButton(self, event):
         self.joystick_panel.ResetToCenter()
