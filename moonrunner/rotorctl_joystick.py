@@ -166,15 +166,14 @@ class MainFrame(wx.Frame):
         self.joystick_panel.ResetToCenter()
 
     def UpdateValues(self, azimuth, elevation):
-        print(f"Azimuth: {azimuth:.2f}°")
-        print(f"Elevation: {elevation:.2f}°")
-
         current_time = time.time()
         if current_time - self.last_update_time >= self.update_interval:
-            print(f"Azimuth: {azimuth:.2f}�")
-            print(f"Elevation: {elevation:.2f}�")
             self.rotctl.park_rotor(az=azimuth, el=elevation)
             self.last_update_time = current_time
+            if (self.debug):
+                print(f"Azimuth: {azimuth:.2f}°")
+                print(f"Elevation: {elevation:.2f}°")
+
 
     def load_config(self):
         try:
